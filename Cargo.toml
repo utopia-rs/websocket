@@ -1,0 +1,30 @@
+[package]
+name = "utopia-websocket"
+description = "WebSocket servers behind one adapter interface (Tokio, in-memory), with hooks, fan-out sends and error stages, and a WebSocket client."
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "BSD-3-Clause"
+
+[features]
+default = ["tokio"]
+# The network adapter (`Tokio`) and the client's network transport
+# (`Client::connect`), on tokio and tokio-tungstenite.
+tokio = ["dep:tokio", "dep:tokio-tungstenite", "dep:httparse"]
+
+[dependencies]
+bytes = "1"
+futures-util = { version = "0.3", default-features = false, features = ["std", "async-await-macro", "sink"] }
+http = "1"
+indexmap = "2"
+php-std = { version = "0.1.0", git = "https://github.com/utopia-rs/php-std" }
+thiserror = "2"
+httparse = { version = "1", optional = true }
+tokio = { version = "1", optional = true, features = ["rt-multi-thread", "macros", "net", "time", "sync", "signal", "rt", "io-util"] }
+tokio-tungstenite = { version = "0.30", optional = true, default-features = false, features = ["connect", "handshake", "rustls-tls-webpki-roots"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "time", "sync", "signal", "rt", "io-util"] }
+
+[package.metadata.utopia]
+php-sync = "809d2819d7da00d8b2f486e3bcb4c98a5265e950"
